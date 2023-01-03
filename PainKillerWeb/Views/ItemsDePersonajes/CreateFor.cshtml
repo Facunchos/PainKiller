@@ -22,7 +22,13 @@
             </div>
 
             <div class="form-floating">
-               @* <select asp-for="descripcion" class="form-select" aria-label="Floating label select example"></select>
+                <input type="number" range="" asp-for="cantidad" min="0" max="999" class="form-control" placeholder=1 value="0" />
+                <label asp-for="cantidad" class="control-label"></label>
+                <p class="text-danger">@ViewBag.ErrorMessage</p>
+            </div>
+
+            <div class="form-floating">
+                @* <select asp-for="descripcion" class="form-select" aria-label="Floating label select example"></select>
                 <label asp-for="descripcion" class="control-label"></label>
                 <p class="text-danger">@ViewBag.ErrorMessage</p>*@
 

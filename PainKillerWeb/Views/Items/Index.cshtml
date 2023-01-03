@@ -24,7 +24,7 @@
                     @Html.DisplayFor(modelItem => item.nombre)
 
                     <button type="button" class="btn btn-outline-danger" style="margin-left: 6px;" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.id">
-                        Eliminar
+                        <i class="bi bi-trash"></i>
                     </button>                    
 
                     <div class="modal fade" id="deleteModal-@item.id" tabindex="-1" aria-labelledby="deleteModal-@item.id" aria-hidden="true">

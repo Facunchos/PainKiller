@@ -12,15 +12,82 @@
             </h2>
         </div>
 
-        <div class="col-2">
+        <div class="col-auto">
             <button class="btn btn-outline-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#inventario" aria-controls="inventario">
                 <i class="bi bi-card-list"></i>
             </button>
         </div>
 
-        <div class="col-3"> </div>
-        <div class="col-3 d-flex justify-content-end ">
-            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-dark">Editar Personaje</a>
+        <div class="col-auto">
+            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-dark">
+                <i class="bi bi-pencil"></i>
+            </a>
+        </div>
+
+        <dt class="col-auto">
+            <button type="button" class="btn btn-outline-danger btn-md" style="width:100px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalAtributos-@Model.id">
+                Atributos
+            </button>
+        </dt>
+
+        @*MODAL ATRIBUTOS*@
+        <div class="modal fade" id="modalAtributos-@Model.id" tabindex="-1" aria-labelledby="modalAtributos-@Model.id" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 fuenteMedieval800"> ATRIBUTOS </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <dl class="row">
+                            <dt class="col-sm-3 ">
+                                <p class="fuenteMedieval800 texto23px">Nombre</p>
+                            </dt>
+                            <dt class="col-sm-2 d-flex justify-content-center">
+                                <p class="fuenteMedieval800 texto23px">Nivel</p>
+                            </dt>
+                            <dt class="col-sm-4"></dt>
+                            <dt class="col-sm-3">
+                            </dt>
+                            @foreach (var item in Model.atributos)
+                            {
+                                if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
+                                {
+                                    <dt class="col-sm-3 text-success">
+                                        @item.atributo.nombre
+                                    </dt>
+                                }
+                                else if (item.atributoId == Model.raza.idAtributoPesimo)
+                                {
+                                    <dt class="col-sm-3 text-danger">
+                                        @item.atributo.nombre
+                                    </dt>
+                                }
+                                else
+                                {
+                                    <dt class="col-sm-3">
+                                        @item.atributo.nombre
+                                    </dt>
+                                }
+
+                                <dd class="col-sm-2 d-flex justify-content-center">
+                                    @item.nivel
+                                </dd>
+                                <dd class="col-sm-3"></dd>
+                                <dd class="col-sm-4 btn-group d-flex justify-content-end" role="group" aria-label="Button group with nested dropdown">
+                                    <a asp-controller="AtributosDePersonajes" asp-action="LevelUp" asp-route-id="@item.id" class="btn btn-outline-success" style="margin-right:6px">
+                                        Subir Nivel
+                                    </a>
+                                </dd>
+
+
+                            }
+                        </dl>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -64,7 +131,7 @@
                             </button>
                         </h2>
                         <div id="flush-collapseOne-@item.id" class="accordion-collapse collapse row" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">@item.cantidad | @item.descripcion </div>
+                            <div class="accordion-body">@item.descripcion</div>
 
                             <div class="btn-group" role="group" style="margin-left:6px">
                                 <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -111,66 +178,6 @@
                     </div>
                 }
             </div>
-
-
-            @*
-            @foreach (var item in Model.inventario)
-            {
-            El llamado al modal funciona pero se bloquea la vista porque el modal bloquea el fondo.
-            No encuentro manera de hacer que el fondo no se ponga en gris del modal. Offcanva lo tienen y se llama Body Scrolling
-            (Fijate en la doc de bootstrap)
-
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#detallesINV-@item.id">
-
-
-
-
-            <button type="button" class="btn  btn-outline-info" id="ToastBtn">
-            @item.Item.nombre
-            </button>
-            <br />
-            <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div id="ToastBtn" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-
-            <strong class="me-auto">@item.Item.nombre</strong>
-
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-
-            </div>
-            <div class="toast-body">
-            @item.descripcion
-            </div>
-            </div>
-            </div>
-
-            *@
-
-
-            @*El llamado al toast no funciona de ninguna manera, ver si falta hacer algun import para que este funcione*@
-
-
-            @*
-            <div class="modal fade" id="detallesINV-@item.id" tabindex="-1" aria-labelledby="detallesINVLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="detallesINVLabel">@item.Item.nombre</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            Cantidad: @item.cantidad
-            <br />
-            Descripcion: @item.descripcion
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-            </div>
-            </div>
-            </div>
-            }
-            *@
         </div>
     </div>
 </div>
@@ -184,17 +191,77 @@
             @Html.DisplayFor(model => model.raza.nombre)
         </dd>
         <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.expActual)
+            Exp:
         </dt>
         <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.expActual)
+            @Html.DisplayFor(model => model.expActual) | @ViewBag.xpTotal
         </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.expGastada)
+
+        @*<dt class="col-sm-8">
+        <button type="button" class="btn btn-outline-danger btn-md" style="width:100px" data-bs-toggle="modal" data-bs-target="#modalAtributos-@Model.id">
+        Atributos
+        </button>
         </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.expGastada)
+        <dd class="col-sm-4">
+        <div class="modal fade" id="modalAtributos-@Model.id" tabindex="-1" aria-labelledby="modalAtributos-@Model.id" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h1 class="modal-title fs-5 fuenteMedieval800"> ATRIBUTOS </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+        <dl class="row">
+        <dt class="col-sm-3 ">
+        <p class="fuenteMedieval800 texto23px">Nombre</p>
+        </dt>
+        <dt class="col-sm-2 d-flex justify-content-center">
+        <p class="fuenteMedieval800 texto23px">Nivel</p>
+        </dt>
+        <dt class="col-sm-4"></dt>
+        <dt class="col-sm-3">
+        </dt>
+        @foreach (var item in Model.atributos)
+        {
+        if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
+        {
+        <dt class="col-sm-3 text-success">
+        @item.atributo.nombre
+        </dt>
+        }
+        else if (item.atributoId == Model.raza.idAtributoPesimo)
+        {
+        <dt class="col-sm-3 text-danger">
+        @item.atributo.nombre
+        </dt>
+        }
+        else
+        {
+        <dt class="col-sm-3">
+        @item.atributo.nombre
+        </dt>
+        }
+
+        <dd class="col-sm-2 d-flex justify-content-center">
+        @item.nivel
         </dd>
+        <dd class="col-sm-7"></dd>
+
+
+
+        }
+        </dl>
+
+        </div>
+        <div class="modal-footer">
+        </div>
+
+        </div>
+        </div>
+        </div>
+        </dd>*@
+
         <dt class="col-sm-4 text-danger">
             VIDA
         </dt>

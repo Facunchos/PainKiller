@@ -1,4 +1,5 @@
-﻿using PainKillerWeb.Models.Pivot;
+﻿using PainKillerWeb.Models.Extra;
+using PainKillerWeb.Models.Pivot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -45,6 +46,9 @@ namespace PainKillerWeb.Models.Main
         public int energiaAct { get; set; }
 
 
+
+
+        public ICollection<Nota> notas { get; set; }
         public ICollection<AtributoDePersonaje> atributos { get; set; }
         public ICollection<HabilidadDePersonaje> habilidades { get; set; }
         public ICollection<HechizoDePersonaje> hechizos { get; set; }

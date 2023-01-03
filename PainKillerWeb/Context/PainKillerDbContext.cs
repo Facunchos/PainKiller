@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PainKillerWeb.Models.Extra;
 using PainKillerWeb.Models.Main;
 using PainKillerWeb.Models.Pivot;
 using System;
@@ -27,5 +28,6 @@ namespace PainKillerWeb.Context
         public DbSet<Distancia> distancias { get; set; }
         public DbSet<Item> items { get; set; }
         public DbSet<ItemDePersonaje> itemsDePersonajes { get; set; }
+        public DbSet<Nota> notas { get; set; }
     }
 }

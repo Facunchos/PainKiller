@@ -58,6 +58,7 @@ namespace PainKillerWeb.Controllers
                 .Include(x => x.hechizos).ThenInclude(x => x.Hechizo).ThenInclude(x => x.elemento)
                 .Include(x => x.hechizos).ThenInclude(x => x.Hechizo).ThenInclude(x => x.distancia)
                 .Include(x => x.inventario).ThenInclude(x => x.Item)
+                .Include(x => x.notas)
                 .FirstOrDefaultAsync(m => m.id == id);
 
             List<string> tipoCostes = new List<string>();
@@ -65,6 +66,7 @@ namespace PainKillerWeb.Controllers
             tipoCostes.Add("MANA");
             tipoCostes.Add("ENERGIA");
 
+            ViewBag.xpTotal = personaje.expActual + personaje.expGastada;
             ViewBag.tipoCostes = tipoCostes;
 
             if (personaje == null)
@@ -91,6 +93,9 @@ namespace PainKillerWeb.Controllers
                 .Include(x => x.hechizos).ThenInclude(x => x.Hechizo).ThenInclude(x => x.distancia)
                 .Include(x => x.inventario).ThenInclude(x => x.Item)
                 .FirstOrDefaultAsync(m => m.id == id);
+
+
+            ViewBag.xpTotal = personaje.expActual + personaje.expGastada;
 
 
             List<string> tipoCostes = new List<string>();

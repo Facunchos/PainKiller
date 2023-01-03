@@ -11,17 +11,87 @@
                 @Html.DisplayFor(model => model.nombre)
             </h2>
         </div>
-
-        <div class="col-2">
-            <button class="btn btn-outline-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#inventario" aria-controls="inventario">
-                <i class="bi bi-card-list"></i>
-            </button>
+        @*
+        <div class="col-auto">
+        <button class="btn btn-outline-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#inventario" aria-controls="inventario">
+        <i class="bi bi-card-list"></i>
+        </button>
+        </div>
+        *@
+        <div class="col-auto">
+            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-dark">
+                <i class="bi bi-pencil"></i>
+            </a>
         </div>
 
+        <dt class="col-auto">
+            <button type="button" class="btn btn-outline-danger btn-md" style="width:100px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalAtributos-@Model.id">
+                Atributos
+            </button>
+        </dt>
 
+        @*MODAL ATRIBUTOS*@
+        <div class="modal fade" id="modalAtributos-@Model.id" tabindex="-1" aria-labelledby="modalAtributos-@Model.id" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 fuenteMedieval800"> ATRIBUTOS </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <dl class="row">
+                            <dt class="col-sm-3 ">
+                                <p class="fuenteMedieval800 texto23px">Nombre</p>
+                            </dt>
+                            <dt class="col-sm-2 d-flex justify-content-center">
+                                <p class="fuenteMedieval800 texto23px">Nivel</p>
+                            </dt>
+                            <dt class="col-sm-4"></dt>
+                            <dt class="col-sm-3">
+                            </dt>
+                            @foreach (var item in Model.atributos)
+                            {
+                                if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
+                                {
+                                    <dt class="col-sm-3 text-success">
+                                        @item.atributo.nombre
+                                    </dt>
+                                }
+                                else if (item.atributoId == Model.raza.idAtributoPesimo)
+                                {
+                                    <dt class="col-sm-3 text-danger">
+                                        @item.atributo.nombre
+                                    </dt>
+                                }
+                                else
+                                {
+                                    <dt class="col-sm-3">
+                                        @item.atributo.nombre
+                                    </dt>
+                                }
+
+                                <dd class="col-sm-2 d-flex justify-content-center">
+                                    @item.nivel
+                                </dd>
+                                <dd class="col-sm-3"></dd>
+                                <dd class="col-sm-4 btn-group d-flex justify-content-end" role="group" aria-label="Button group with nested dropdown">
+                                    <a asp-controller="AtributosDePersonajes" asp-action="LevelUp" asp-route-id="@item.id" class="btn btn-outline-success" style="margin-right:6px">
+                                        Subir Nivel
+                                    </a>
+                                </dd>
+
+
+                            }
+                        </dl>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="row col-6">
+    <div class="row col-5">
         <div class="col-4 d-flex justify-content-start align-content-center">
             <h3 class="fuenteMedieval800">Atributos</h3>
         </div>
@@ -53,37 +123,25 @@
                             </button>
                         </h2>
                         <div id="flush-collapseOne-@item.id" class="accordion-collapse collapse row" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body row">
-                                <div>
-                                    Desc: @item.descripcion
-                                </div>
-
-                                <div>
-                                    <a asp-controller="ItemsDePersonajes" asp-action="Edit" asp-route-id="@item.id" type="button">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button type="button" class="bg-danger" data-bs-toggle="modal" data-bs-target="#deleteINVModal-@item.id">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            <div class="accordion-body">@item.descripcion</div>
 
                             <div class="btn-group" role="group" style="margin-left:6px">
-                                @*
-                            <button type="button" class="btn btn-outline-dark " data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-arrow-down-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                            <li>
-                            <a asp-controller="ItemsDePersonajes" asp-action="Edit" asp-route-id="@item.id" type="button" class="dropdown-item">
-                            <i class="bi bi-pencil"></i>
-                            </a>
-                            <button type="button" class="dropdown-item bg-dange" data-bs-toggle="modal" data-bs-target="#deleteINVModal-@item.id">
-                            <i class="bi bi-trash"></i>
-                            </button>
-                            </li>
-                            </ul>*@
-
+                                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Opciones
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a asp-controller="ItemsDePersonajes" asp-action="Edit" asp-route-id="@item.id" type="button" class="dropdown-item" style="margin-right:6px">
+                                            Editar
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <button type="button" class="dropdown-item bg-danger" style="color: white" data-bs-toggle="modal" data-bs-target="#deleteINVModal-@item.id">
+                                            Eliminar
+                                        </button>
+                                    </li>
+                                </ul>
 
                                 <div class="modal fade" id="deleteINVModal-@item.id" tabindex="-1" aria-labelledby="deleteINVModal-@item.id" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -127,20 +185,16 @@
             @Html.DisplayFor(model => model.raza.nombre)
         </dd>
         <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.expActual)
+            Exp:
         </dt>
         <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.expActual)
-        </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.expGastada)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.expGastada)
+            @Html.DisplayFor(model => model.expActual) | @ViewBag.xpTotal
         </dd>
 
+
+
         <dt class="col-sm-4">
-            <button type="button" class="btn btn-outline-danger btn-sm" style="width:70px" data-bs-toggle="modal" data-bs-target="#modalVida-@Model.id">
+            <button type="button" class="btn btn-outline-danger btn-sm" style="width:70px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalVida-@Model.id">
                 VIDA
             </button>
             <a asp-action="DescansarDeAUno" asp-route-id="@Model.id" asp-route-numero="1" class="btn btn-outline-success btn-sm">
@@ -186,7 +240,7 @@
 
 
         <dt class="col-sm-4">
-            <button type="button" class="btn btn-outline-primary btn-sm" style="width:70px" data-bs-toggle="modal" data-bs-target="#modalMana-@Model.id">
+            <button type="button" class="btn btn-outline-primary btn-sm" style="width:70px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalMana-@Model.id">
                 MANA
             </button>
             <a asp-action="DescansarDeAUno" asp-route-id="@Model.id" asp-route-numero="2" class="btn btn-outline-success btn-sm">
@@ -231,7 +285,7 @@
         </dd>
 
         <dt class="col-sm-4">
-            <button type="button" class="btn btn-outline-success btn-sm " style="width:70px" data-bs-toggle="modal" data-bs-target="#modalEnerg-@Model.id">
+            <button type="button" class="btn btn-outline-success btn-sm " style="width:70px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalEnerg-@Model.id">
                 ENERGIA
             </button>
             <a asp-action="DescansarDeAUno" asp-route-id="@Model.id" asp-route-numero="3" class="btn btn-outline-success btn-sm">
@@ -276,46 +330,46 @@
         </dd>
     </dl>
 
-    <dl class="row col-6">
-        <dt class="col-sm-3 ">
-            <p class="fuenteMedieval800 texto23px">Nombre</p>
-        </dt>
-        <dt class="col-sm-2 d-flex justify-content-center">
-            <p class="fuenteMedieval800 texto23px">Nivel</p>
-        </dt>
-        <dt class="col-sm-4"></dt>
-        <dt class="col-sm-3">
-        </dt>
-        @foreach (var item in Model.atributos)
-        {
-            if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
-            {
-                <dt class="col-sm-3 text-success">
-                    @item.atributo.nombre
-                </dt>
-            }
-            else if (item.atributoId == Model.raza.idAtributoPesimo)
-            {
-                <dt class="col-sm-3 text-danger">
-                    @item.atributo.nombre
-                </dt>
-            }
-            else
-            {
-                <dt class="col-sm-3">
-                    @item.atributo.nombre
-                </dt>
-            }
+    @*<dl class="row col-6">
+    <dt class="col-sm-3 ">
+    <p class="fuenteMedieval800 texto23px">Nombre</p>
+    </dt>
+    <dt class="col-sm-2 d-flex justify-content-center">
+    <p class="fuenteMedieval800 texto23px">Nivel</p>
+    </dt>
+    <dt class="col-sm-4"></dt>
+    <dt class="col-sm-3">
+    </dt>
+    @foreach (var item in Model.atributos)
+    {
+    if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
+    {
+    <dt class="col-sm-3 text-success">
+    @item.atributo.nombre
+    </dt>
+    }
+    else if (item.atributoId == Model.raza.idAtributoPesimo)
+    {
+    <dt class="col-sm-3 text-danger">
+    @item.atributo.nombre
+    </dt>
+    }
+    else
+    {
+    <dt class="col-sm-3">
+    @item.atributo.nombre
+    </dt>
+    }
 
-            <dd class="col-sm-2 d-flex justify-content-center">
-                @item.nivel
-            </dd>
-            <dd class="col-sm-7"></dd>
+    <dd class="col-sm-2 d-flex justify-content-center">
+    @item.nivel
+    </dd>
+    <dd class="col-sm-7"></dd>
 
 
 
-        }
-    </dl>
+    }
+    </dl>*@
 
 </div>
 
