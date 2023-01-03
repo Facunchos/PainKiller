@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Jugar";
 }
-
+@*HEADER CON NOMBRE PERSONAJE Y BOTONES DE INVERNTARIO, EDIT Y ATRIBUTOS*@
 <div class="row">
     <div class="row col-6">
         <div class="col-4 d-flex justify-content-start align-content-center">
@@ -11,98 +11,38 @@
                 @Html.DisplayFor(model => model.nombre)
             </h2>
         </div>
+
+        <div class="col-auto">
+            <button class="btn btn-outline-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#inventario" aria-controls="inventario">
+                <i class="bi bi-card-list"></i>
+            </button>
+        </div>
         @*
         <div class="col-auto">
-        <button class="btn btn-outline-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#inventario" aria-controls="inventario">
-        <i class="bi bi-card-list"></i>
-        </button>
+        <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-dark">
+        <i class="bi bi-pencil"></i>
+        </a>
         </div>
         *@
-        <div class="col-auto">
-            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-dark">
-                <i class="bi bi-pencil"></i>
-            </a>
-        </div>
-
         <dt class="col-auto">
             <button type="button" class="btn btn-outline-danger btn-md" style="width:100px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalAtributos-@Model.id">
                 Atributos
             </button>
         </dt>
 
-        @*MODAL ATRIBUTOS*@
-        <div class="modal fade" id="modalAtributos-@Model.id" tabindex="-1" aria-labelledby="modalAtributos-@Model.id" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5 fuenteMedieval800"> ATRIBUTOS </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
 
-                        <dl class="row">
-                            <dt class="col-sm-3 ">
-                                <p class="fuenteMedieval800 texto23px">Nombre</p>
-                            </dt>
-                            <dt class="col-sm-2 d-flex justify-content-center">
-                                <p class="fuenteMedieval800 texto23px">Nivel</p>
-                            </dt>
-                            <dt class="col-sm-4"></dt>
-                            <dt class="col-sm-3">
-                            </dt>
-                            @foreach (var item in Model.atributos)
-                            {
-                                if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
-                                {
-                                    <dt class="col-sm-3 text-success">
-                                        @item.atributo.nombre
-                                    </dt>
-                                }
-                                else if (item.atributoId == Model.raza.idAtributoPesimo)
-                                {
-                                    <dt class="col-sm-3 text-danger">
-                                        @item.atributo.nombre
-                                    </dt>
-                                }
-                                else
-                                {
-                                    <dt class="col-sm-3">
-                                        @item.atributo.nombre
-                                    </dt>
-                                }
-
-                                <dd class="col-sm-2 d-flex justify-content-center">
-                                    @item.nivel
-                                </dd>
-                                <dd class="col-sm-3"></dd>
-                                <dd class="col-sm-4 btn-group d-flex justify-content-end" role="group" aria-label="Button group with nested dropdown">
-                                    <a asp-controller="AtributosDePersonajes" asp-action="LevelUp" asp-route-id="@item.id" class="btn btn-outline-success" style="margin-right:6px">
-                                        Subir Nivel
-                                    </a>
-                                </dd>
-
-
-                            }
-                        </dl>
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="row col-5">
         <div class="col-4 d-flex justify-content-start align-content-center">
             <h3 class="fuenteMedieval800">Atributos</h3>
         </div>
-
     </div>
 </div>
-<hr />
 
+<br>
 
 @* OFFCANVAS INVENTARIO *@
-
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="inventario" aria-labelledby="inventarioLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title fuenteMedieval800" id="featuresLabel">Inventario</h5>
@@ -174,8 +114,166 @@
     </div>
 </div>
 
+@*MODAL ATRIBUTOS*@
+<div class="modal fade" id="modalAtributos-@Model.id" tabindex="-1" aria-labelledby="modalAtributos-@Model.id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 fuenteMedieval800"> ATRIBUTOS </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <dl class="row">
+                    <dt class="col-sm-3 ">
+                        <p class="fuenteMedieval800 texto23px">Nombre</p>
+                    </dt>
+                    <dt class="col-sm-2 d-flex justify-content-center">
+                        <p class="fuenteMedieval800 texto23px">Nivel</p>
+                    </dt>
+                    <dt class="col-sm-4"></dt>
+                    <dt class="col-sm-3">
+                    </dt>
+                    @foreach (var item in Model.atributos)
+                    {
+                        if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
+                        {
+                            <dt class="col-sm-3 text-success">
+                                @item.atributo.nombre
+                            </dt>
+                        }
+                        else if (item.atributoId == Model.raza.idAtributoPesimo)
+                        {
+                            <dt class="col-sm-3 text-danger">
+                                @item.atributo.nombre
+                            </dt>
+                        }
+                        else
+                        {
+                            <dt class="col-sm-3">
+                                @item.atributo.nombre
+                            </dt>
+                        }
+
+                        <dd class="col-sm-2 d-flex justify-content-center">
+                            @item.nivel
+                        </dd>
+                        <dd class="col-sm-3"></dd>
+                        <dd class="col-sm-4 btn-group d-flex justify-content-end" role="group" aria-label="Button group with nested dropdown">
+                            <a asp-controller="AtributosDePersonajes" asp-action="LevelUp" asp-route-id="@item.id" class="btn btn-outline-success" style="margin-right:6px">
+                                Subir Nivel
+                            </a>
+                        </dd>
 
 
+                    }
+                </dl>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL VIDA*@
+<div class="modal fade text-danger" id="modalVida-@Model.id" tabindex="-1" aria-labelledby="modalVida-@Model.id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 fuenteMedieval800"> Modificar Vida Actual </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="EditarDeAUno" method="post">
+                <div class="modal-body">
+
+                    <div>
+                        <input type="hidden" id="id" name="id" value="@Model.id" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" id="num" name="num" class="form-control" placeholder=1 />
+                        <label for="num">@Html.DisplayNameFor(model => model.vidaAct)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="hidden" name="tipo" value="1" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="submit" value="alterar" class="btn btn-danger" />
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@*MODAL MANA*@
+<div class="modal fade text-primary" id="modalMana-@Model.id" tabindex="-1" aria-labelledby="modalMana-@Model.id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 fuenteMedieval800"> Modificar Mana Actual </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="EditarDeAUno" method="post">
+                <div class="modal-body">
+
+                    <div>
+                        <input type="hidden" id="id" name="id" value="@Model.id" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" id="num" name="num" class="form-control" placeholder=1 />
+                        <label for="num">@Html.DisplayNameFor(model => model.manaAct)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="hidden" name="tipo" value="2" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="submit" value="alterar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@*MODAL ENERGIA*@
+<div class="modal fade text-success" id="modalEnergia-@Model.id" tabindex="-1" aria-labelledby="modalEnergia-@Model.id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 fuenteMedieval800"> Modificar Energia Actual </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="EditarDeAUno" method="post">
+                <div class="modal-body">
+
+                    <div>
+                        <input type="hidden" id="id" name="id" value="@Model.id" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" id="num" name="num" class="form-control" placeholder=1 />
+                        <label for="num">@Html.DisplayNameFor(model => model.energiaAct)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="hidden" name="tipo" value="3" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="submit" value="alterar" class="btn btn-success" />
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@*PRIMER BLOQUE DONDE SE MUESTRA LA RAZA, NOMBRE, XP Y LOS BOTONES DE VIDA MANA ENERGIA*@
 <div class="row">
     <dl class="row col-6">
         <dt class="col-sm-4">
@@ -204,40 +302,9 @@
         <dd class="col-sm-4">
             @Html.DisplayFor(model => model.vidaAct) | @Html.DisplayFor(model => model.vidaMax)
         </dd>
+
         <dd class="col-sm-4">
-            <div class="modal fade text-danger" id="modalVida-@Model.id" tabindex="-1" aria-labelledby="modalVida-@Model.id" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5 fuenteMedieval800"> Modificar Vida Actual </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form asp-action="EditarDeAUno" method="post">
-                            <div class="modal-body">
-
-                                <div>
-                                    <input type="hidden" id="id" name="id" value="@Model.id" />
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" id="num" name="num" class="form-control" placeholder=1 />
-                                    <label for="num">@Html.DisplayNameFor(model => model.vidaAct)</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="hidden" name="tipo" value="1" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="form-group">
-                                    <input type="submit" value="alterar" class="btn btn-danger" />
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
         </dd>
-
 
         <dt class="col-sm-4">
             <button type="button" class="btn btn-outline-primary btn-sm" style="width:70px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalMana-@Model.id">
@@ -251,41 +318,10 @@
             @Html.DisplayFor(model => model.manaAct) | @Html.DisplayFor(model => model.manaMax)
         </dd>
         <dd class="col-sm-4">
-            <div class="modal fade text-primary" id="modalMana-@Model.id" tabindex="-1" aria-labelledby="modalMana-@Model.id" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5 fuenteMedieval800"> Modificar Mana Actual </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form asp-action="EditarDeAUno" method="post">
-                            <div class="modal-body">
-
-                                <div>
-                                    <input type="hidden" id="id" name="id" value="@Model.id" />
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" id="num" name="num" class="form-control" placeholder=1 />
-                                    <label for="num">@Html.DisplayNameFor(model => model.manaAct)</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="hidden" name="tipo" value="2" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="form-group">
-                                    <input type="submit" value="alterar" class="btn btn-primary" />
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
         </dd>
 
         <dt class="col-sm-4">
-            <button type="button" class="btn btn-outline-success btn-sm " style="width:70px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalEnerg-@Model.id">
+            <button type="button" class="btn btn-outline-success btn-sm " style="width:70px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalEnergia-@Model.id">
                 ENERGIA
             </button>
             <a asp-action="DescansarDeAUno" asp-route-id="@Model.id" asp-route-numero="3" class="btn btn-outline-success btn-sm">
@@ -296,85 +332,13 @@
             @Html.DisplayFor(model => model.energiaAct) | @Html.DisplayFor(model => model.energiaMax)
         </dd>
         <dd class="col-sm-4">
-            <div class="modal fade text-success" id="modalEnerg-@Model.id" tabindex="-1" aria-labelledby="modalEnerg-@Model.id" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5 fuenteMedieval800"> Modificar Energia Actual </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form asp-action="EditarDeAUno" method="post">
-                            <div class="modal-body">
-
-                                <div>
-                                    <input type="hidden" id="id" name="id" value="@Model.id" />
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" id="num" name="num" class="form-control" placeholder=1 />
-                                    <label for="num">@Html.DisplayNameFor(model => model.energiaAct)</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="hidden" name="tipo" value="3" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="form-group">
-                                    <input type="submit" value="alterar" class="btn btn-success" />
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
         </dd>
     </dl>
-
-    @*<dl class="row col-6">
-    <dt class="col-sm-3 ">
-    <p class="fuenteMedieval800 texto23px">Nombre</p>
-    </dt>
-    <dt class="col-sm-2 d-flex justify-content-center">
-    <p class="fuenteMedieval800 texto23px">Nivel</p>
-    </dt>
-    <dt class="col-sm-4"></dt>
-    <dt class="col-sm-3">
-    </dt>
-    @foreach (var item in Model.atributos)
-    {
-    if (item.atributoId == Model.raza.idAtributoRelevante || item.atributoId == Model.raza.idAtributoRelevante2)
-    {
-    <dt class="col-sm-3 text-success">
-    @item.atributo.nombre
-    </dt>
-    }
-    else if (item.atributoId == Model.raza.idAtributoPesimo)
-    {
-    <dt class="col-sm-3 text-danger">
-    @item.atributo.nombre
-    </dt>
-    }
-    else
-    {
-    <dt class="col-sm-3">
-    @item.atributo.nombre
-    </dt>
-    }
-
-    <dd class="col-sm-2 d-flex justify-content-center">
-    @item.nivel
-    </dd>
-    <dd class="col-sm-7"></dd>
-
-
-
-    }
-    </dl>*@
-
 </div>
 
 <br>
 
+@*SEGUNDO BLOQUE HABILIDADES*@
 <div>
     <div class="row">
         <div class="col-4 d-flex justify-content-start align-bottom">
@@ -498,7 +462,7 @@
 
 </div>
 
-
+@*TERCER BLOQUE HECHIZOS*@
 <div>
     <div class="row">
         <div class="col-4 d-flex justify-content-start align-bottom">
@@ -688,6 +652,7 @@
 
 </div>
 
+@*FOOTER CON LOS BOTONES DE VOLVER Y DETALLES*@
 <div>
     <a asp-action="Index" class="btn btn-outline-danger mt-2 btn-sm"><i class="bi bi-arrow-left"></i></a>
     <a asp-action="Details" asp-route-id="@Model.id" class="btn btn-outline-dark mt-2 btn-sm">Detalles</a>

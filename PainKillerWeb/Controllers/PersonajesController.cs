@@ -92,6 +92,7 @@ namespace PainKillerWeb.Controllers
                 .Include(x => x.hechizos).ThenInclude(x => x.Hechizo).ThenInclude(x => x.elemento)
                 .Include(x => x.hechizos).ThenInclude(x => x.Hechizo).ThenInclude(x => x.distancia)
                 .Include(x => x.inventario).ThenInclude(x => x.Item)
+                .Include(x => x.notas)
                 .FirstOrDefaultAsync(m => m.id == id);
 
 
