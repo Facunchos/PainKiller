@@ -17,24 +17,18 @@
                 <i class="bi bi-card-list"></i>
             </button>
         </div>
-
+        @*
         <div class="col-auto">
-            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-dark">
-                <i class="bi bi-pencil"></i>
-            </a>
+        <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-dark">
+        <i class="bi bi-pencil"></i>
+        </a>
         </div>
-
-        <div class="col-auto">
+        *@
+        <dt class="col-auto">
             <button type="button" class="btn btn-outline-danger btn-md" style="width:100px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalAtributos-@Model.id">
                 Atributos
             </button>
-        </div>
-
-        <div class="col-auto">
-            <button type="button" class="btn btn-outline-danger btn-md" style="width:100px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalAtributos-@Model.id">
-                <i class="bi bi-journal-check"></i>
-            </button>
-        </div>
+        </dt>
 
 
     </div>
@@ -44,13 +38,9 @@
             <h3 class="fuenteMedieval800">Atributos</h3>
         </div>
     </div>
-
 </div>
 
-<hr />
-
-@*OFFCANVAS NOTAS*@
-
+<br>
 
 @* OFFCANVAS INVENTARIO *@
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="inventario" aria-labelledby="inventarioLabel">
@@ -208,7 +198,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="form-group">
-                        <input type="submit" value="Alterar" class="btn btn-danger" />
+                        <input type="submit" value="alterar" class="btn btn-danger" />
                     </div>
                 </div>
             </form>
@@ -300,6 +290,7 @@
         </dd>
 
 
+
         <dt class="col-sm-4">
             <button type="button" class="btn btn-outline-danger btn-sm" style="width:70px; margin:3px;" data-bs-toggle="modal" data-bs-target="#modalVida-@Model.id">
                 VIDA
@@ -345,19 +336,15 @@
     </dl>
 </div>
 
+<br>
+
 @*SEGUNDO BLOQUE HABILIDADES*@
 <div>
     <div class="row">
-
         <div class="col-4 d-flex justify-content-start align-bottom">
             <h3 class="fuenteMedieval800">Habilidades</h3>
         </div>
-        <div class="col-6"> </div>
-        <div class="col-2 d-flex justify-content-center">
-            <a asp-controller="HabilidadesDePersonajes" asp-action="CreateFor" asp-route-id="@Model.id" class="btn btn-outline-dark botonDetalles">
-                <i class="bi bi-plus-square"></i>
-            </a>
-        </div>
+        <div class="col-8"> </div>
 
     </div>
     <hr />
@@ -409,15 +396,12 @@
             <dd class="col-sm-2">
             </dd>
 
-
-
-
-
-            <dd class="col-sm-3 btn-group mt-1 d-flex justify-content-center" role="group" aria-label="Button group with nested dropdown">
+            <dd class="col-sm-3 mt-1 d-flex justify-content-center">
 
                 <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#useHabilidad-@item.id" style="margin-right:12px;">
                     Usar Habilidad
                 </button>
+
                 @*MODAL USAR HABILIDAD*@
                 <div class="modal fade" id="useHabilidad-@item.id" tabindex="-1" aria-labelledby="useHabilidad-@item.id" aria-hidden="true">
                     <div class="modal-dialog">
@@ -447,73 +431,39 @@
                     </div>
                 </div>
 
-                <div class="btn-group" role="group" style="margin-left:6px">
-                    <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Opciones
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a type="button" asp-controller="HabilidadesDePersonajes" asp-action="LevelUp" asp-route-id="@item.id" class="dropdown-item btn btn-outline-dark text-success">
-                                Subir Nivel
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <button type="button" class="dropdown-item btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#detalles-@item.id">
-                                Detalles
-                            </button>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <button type="button" class="dropdown-item bg-danger" style="color: white" data-bs-toggle="modal" data-bs-target="#deleteHabilidadModal-@item.id">
-                                Eliminar
-                            </button>
-                        </li>
-                    </ul>
 
 
-                    <div class="modal fade" id="detalles-@item.id" tabindex="-1" aria-labelledby="detalles-@item.id" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5 fuenteMedieval800"> Detalles De La Habilidad "@item.Habilidad.nombre"</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <h5>Descripcion: </h5>
-                                    <p>@Html.DisplayFor(modelItem => item.Habilidad.descripcion)</p>
-                                    <h5>tirada: </h5>
-                                    (@item.Nivel+@item.Personaje.atributos.Where(x => x.atributoId == item.Habilidad.atributoId).FirstOrDefault().nivel) K @item.Personaje.atributos.Where(x => x.atributoId == item.Habilidad.atributoId).FirstOrDefault().nivel
 
-                                </div>
+
+                @*
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#detalles-@item.id">
+                    Detalles
+                </button>
+
+                MODAL BOTON DETALLES
+
+                <div class="modal fade" id="detalles-@item.id" tabindex="-1" aria-labelledby="detalles-@item.id" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 fuenteMedieval800"> Detalles De La Habilidad "@item.Habilidad.nombre"</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Descripcion: </h5>
+                                <p>@Html.DisplayFor(modelItem => item.Habilidad.descripcion)</p>
+                                <h5>tirada: </h5>
+                                (@item.Nivel+@item.Personaje.atributos.Where(x => x.atributoId == item.Habilidad.atributoId).FirstOrDefault().nivel) K @item.Personaje.atributos.Where(x => x.atributoId == item.Habilidad.atributoId).FirstOrDefault().nivel
 
                             </div>
-                        </div>
-                    </div>
 
-
-                    <div class="modal fade" id="deleteHabilidadModal-@item.id" tabindex="-1" aria-labelledby="deleteHabilidadModal-@item.id" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5 fuenteMedieval800"> Confirmar Eliminacion de Habilidad</h1>
-                                </div>
-                                <div class="modal-body">
-                                    <p> estas seguro que deseas eliminar la Habilidad "@item.Habilidad.nombre" del personaje @Model.nombre</p>
-                                    <p><strong> no habra vuelta atras </strong></p>
-                                </div>
-                                <div class="modal-footer">
-                                    <form asp-controller="HabilidadesDePersonajes" asp-action="DeleteInModal" asp-route-id="@item.id">
-                                        <input type="hidden" asp-for="@item.id" />
-                                        <input type="submit" value="Delete" class="btn btn-danger" />
-                                    </form>
-
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+*@
             </dd>
+
+
         }
     </dl>
 
@@ -525,12 +475,7 @@
         <div class="col-4 d-flex justify-content-start align-bottom">
             <h3 class="fuenteMedieval800">Hechizos</h3>
         </div>
-        <div class="col-6"> </div>
-        <div class="col-2 d-flex justify-content-center">
-            <a asp-controller="HechizosDePersonajes" asp-action="CreateFor" asp-route-id="@Model.id" class="btn btn-outline-dark botonDetalles">
-                <i class="bi bi-plus-square"></i>
-            </a>
-        </div>
+        <div class="col-8"> </div>
 
     </div>
     <hr />

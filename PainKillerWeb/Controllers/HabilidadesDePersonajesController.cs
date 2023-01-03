@@ -111,7 +111,7 @@ namespace PainKillerWeb.Controllers
                         _context.Update(pj);
                         _context.Add(habilidadDePersonaje);
                         await _context.SaveChangesAsync();
-                        return RedirectToAction("Details", "Personajes", new { id = habilidadDePersonaje.personajeId });
+                        return RedirectToAction("Jugar", "Personajes", new { id = habilidadDePersonaje.personajeId });
                     }
                     else 
                     {
@@ -266,7 +266,7 @@ namespace PainKillerWeb.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Personajes", new { id = habilidadDePersonaje.personajeId });
+                return RedirectToAction("Jugar", "Personajes", new { id = habilidadDePersonaje.personajeId });
             }
 
 
@@ -320,7 +320,7 @@ namespace PainKillerWeb.Controllers
             var habilidadDePersonaje = await _context.habilidadDePersonajes.FindAsync(id);
             _context.habilidadDePersonajes.Remove(habilidadDePersonaje);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Personajes", new { id = habilidadDePersonaje.personajeId });
+            return RedirectToAction("Jugar", "Personajes", new { id = habilidadDePersonaje.personajeId });
         }
 
         private bool HabilidadDePersonajeExists(int id)

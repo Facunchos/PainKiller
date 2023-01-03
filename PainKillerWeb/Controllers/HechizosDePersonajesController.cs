@@ -199,7 +199,7 @@ namespace PainKillerWeb.Controllers
                         _context.Update(pj);
                         _context.Add(hechizoDePersonaje);
                         await _context.SaveChangesAsync();
-                        return RedirectToAction("Details", "Personajes", new { id = hechizoDePersonaje.personajeId });
+                        return RedirectToAction("Jugar", "Personajes", new { id = hechizoDePersonaje.personajeId });
                     }
                     else
                     {
@@ -225,7 +225,7 @@ namespace PainKillerWeb.Controllers
             var hechizoDePersonaje = await _context.hechizosDePersonajes.FindAsync(id);
             _context.hechizosDePersonajes.Remove(hechizoDePersonaje);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Personajes", new { id = hechizoDePersonaje.personajeId });
+            return RedirectToAction("Jugar", "Personajes", new { id = hechizoDePersonaje.personajeId });
         }
 
         public async Task<IActionResult> useHechizo(int id)

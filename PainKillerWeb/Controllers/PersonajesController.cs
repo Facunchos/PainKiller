@@ -204,7 +204,7 @@ namespace PainKillerWeb.Controllers
             }
 
 
-            return RedirectToAction("Details", "Personajes", new { id = pers.id });
+            return RedirectToAction("Jugar", "Personajes", new { id = pers.id });
         }
 
         public async Task<IActionResult> Descansar(int id)
@@ -353,7 +353,7 @@ namespace PainKillerWeb.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", new { id = personaje.id });
+                return RedirectToAction("Jugar", new { id = personaje.id });
             }
             ViewData["razaId"] = new SelectList(_context.raza, "id", "nombre", personaje.razaId);
             return View(personaje);

@@ -103,7 +103,7 @@ namespace PainKillerWeb.Controllers
                 _context.Update(pj);
                 _context.Add(itemDePersonaje);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Personajes", new { id = itemDePersonaje.personajeId });
+                return RedirectToAction("Jugar", "Personajes", new { id = itemDePersonaje.personajeId });
             }
 
 
@@ -121,7 +121,7 @@ namespace PainKillerWeb.Controllers
             var itemsDePersonajes = await _context.itemsDePersonajes.FindAsync(id);
             _context.itemsDePersonajes.Remove(itemsDePersonajes);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Personajes", new { id = itemsDePersonajes.personajeId });
+            return RedirectToAction("Jugar", "Personajes", new { id = itemsDePersonajes.personajeId });
         }
 
         // GET: ItemsDePersonajes/Edit/5
@@ -172,7 +172,7 @@ namespace PainKillerWeb.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Personajes", new { id = itemDePersonaje.personajeId });
+                return RedirectToAction("Jugar", "Personajes", new { id = itemDePersonaje.personajeId });
 
             }
             ViewData["itemId"] = new SelectList(_context.items, "id", "nombre", itemDePersonaje.itemId);
