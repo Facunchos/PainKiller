@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Newtonsoft.Json;
 using PainKillerWeb.Context;
@@ -181,6 +182,7 @@ namespace PainKillerWeb.Controllers
             ViewData["razaId"] = new SelectList(_context.raza, "id", "nombre", personaje.razaId);
             ViewBag.Atributos = _context.atributos.ToList();
             ViewBag.CosteXP = xpGastada;
+            ViewBag.AtributosIngresados = atributosDePersonaje;
             return View();
 
         }

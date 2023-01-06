@@ -35,13 +35,22 @@
         }
         @foreach (var item in ViewBag.atributos)
         {
+
+            int valorDeNivel = 0;
+            if (ViewBag.AtributosIngresados != null)
+            {
+                valorDeNivel = ViewBag.AtributosIngresados[i].nivel;
+            }
+
             <div class="col-sm-3 form-group" style="margin-left:3%">
                 <label asp-for="nivel">@item.nombre:</label>
                 <input type="hidden" asp-for="atributoId" name="[@i].atributoId" value=@item.id class="col-sm"/>
-                <input type="number" range="" asp-for="nivel" name="[@i].nivel" min="0" max="10" class="form-control" placeholder=1 value="0" />
+                <input type="number" range="" asp-for="nivel" name="[@i].nivel" min="0" max="10" class="form-control" placeholder=1 value="@valorDeNivel" />
+                <span asp-validation-for="nivel"></span>
                 <span hidden>
                     @(i++)
                 </span>
+
                 <br />
             </div>
         }
