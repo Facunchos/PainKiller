@@ -129,7 +129,7 @@ namespace PainKillerWeb.Controllers
             ViewData["HabilidadId"] = new SelectList(_context.habilidades, "id", "nombre");
             ViewData["personajeId"] = habilidadDePersonaje.personajeId;
 
-            return View();
+            return RedirectToAction("Jugar", "Personaje", new {id = habilidadDePersonaje.personajeId });
         }
 
         public async Task<IActionResult> useHabilidad(int id)

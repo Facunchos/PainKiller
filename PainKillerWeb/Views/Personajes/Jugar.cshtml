@@ -184,6 +184,10 @@
     </div>
 </div>
 
+
+@*MODAL AGREGAR HABILIDAD*@
+
+
 @*MODAL VIDA*@
 <div class="modal fade text-danger" id="modalVida-@Model.id" tabindex="-1" aria-labelledby="modalVida-@Model.id" aria-hidden="true">
     <div class="modal-dialog">
@@ -250,7 +254,7 @@
     </div>
 </div>
 
-@*MODAL ENERGIA*@
+@*MODAL ENERGIA*@ 
 <div class="modal fade text-success" id="modalEnergia-@Model.id" tabindex="-1" aria-labelledby="modalEnergia-@Model.id" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -357,6 +361,9 @@
             <a asp-controller="HabilidadesDePersonajes" asp-action="CreateFor" asp-route-id="@Model.id" class="btn btn-outline-dark botonDetalles">
                 <i class="bi bi-plus-square"></i>
             </a>
+            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarHabilidad-@Model.id">
+                <i class="bi bi-plus-square"></i>
+            </button>
         </div>
 
     </div>

@@ -96,6 +96,7 @@ namespace PainKillerWeb.Controllers
                 .FirstOrDefaultAsync(m => m.id == id);
 
 
+            ViewData["HechizoId"] = new SelectList(_context.hechizos, "id", "nombre");
             ViewBag.xpTotal = personaje.expActual + personaje.expGastada;
 
 
@@ -394,6 +395,27 @@ namespace PainKillerWeb.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult CreateFor(int id)
+        {
+
+            var personaje = _context.personajes.Find(id);
+
+            if (personaje == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["HabilidadId"] = new SelectList(_context.habilidades, "id", "nombre");
+            ViewData["personajeId"] = id;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AgregarHabilidad(int habilidadId, int id)
+        {
+            return RedirectToAction("CreateFor", "HabilidadesDePersonaje", new { personajeId = id, HabilidadId = habilidadId, Nivel = 1 });
         }
 
         private bool PersonajeExists(int id)
