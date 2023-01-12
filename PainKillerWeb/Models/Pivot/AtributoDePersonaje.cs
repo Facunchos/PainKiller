@@ -15,6 +15,7 @@ namespace PainKillerWeb.Models.Pivot
         public int personajeId { get; set; }
         [Required]
         public int atributoId { get; set; }
+
         [Required]
         [Range(0, 10, ErrorMessage = "NIVEL MINIMO NO ALCANZADO")]
         public int nivel { get; set; }
