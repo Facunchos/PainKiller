@@ -6,69 +6,81 @@
 
 <h2 class="fuenteMedieval800">Creacion De Personaje</h2>
 <hr />
-@*<div class="form-floating col-3">*@
 
-<div class="fuenteMedieval">
-    <form asp-action="CreateConAtributos" class="row align-content-around" style="paddig:5%">
-        <div asp-validation-summary="ModelOnly" class="text-danger" onsubmit=false></div>
-        <div class="form-floating col-sm-4">
-            <input asp-for="personaje.nombre" class="form-control" placeholder=1 id="nombre" />
-            <label asp-for="personaje.nombre" style="margin-left:1%" ></label>
-            <span asp-validation-for="personaje.nombre" class="text-danger"></span>
-        </div>
-        <div class="form-floating col-sm-4">
-            <select asp-for="personaje.razaId" class="form-select" aria-label="Floating label select example" asp-items="ViewBag.razaId"></select>
-            <label asp-for="personaje.razaId" class="control-label" style="margin-left:1%"></label>
-        </div>
-        <div class="form-floating col-sm-4">
-            <input asp-for="personaje.expActual" class="form-control" placeholder=1 value="25" />
-            <label asp-for="personaje.expActual" style="margin-left:1%"></label>
-            <span asp-validation-for="personaje.expActual" class="text-danger"></span>
-        </div>
+<form asp-action="CreateConAtributos" id="formPersonaje" class="row align-content-around fuenteMedieval" style="paddig:5%">
 
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-floating col-sm-12">
-            <hr />
-        </div>
-        @{
-            int i = 0;
-        }
-        @foreach (var item in ViewBag.atributos)
+    <div class="form-floating col-sm-4">
+        <input asp-for="personaje.nombre" id="inputNombre" class="form-control" placeholder="1" />
+        <label asp-for="personaje.nombre" class="margenLeft1"></label>
+        <span asp-validation-for="personaje.nombre" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating col-sm-4">
+        <select asp-for="personaje.razaId" id="selectRaza" class="form-select" aria-label="Floating label select example" asp-items="ViewBag.razaId"></select>
+        <label asp-for="personaje.razaId" class="control-label margenLeft1"></label>
+    </div>
+    
+    <div class="form-floating col-sm-4">
+        <input asp-for="personaje.expActual" id="inputXp" class="form-control" placeholder=1 value="25" />
+        <label asp-for="personaje.expActual" class="margenLeft1" ></label>
+        <span asp-validation-for="personaje.expActual" class="text-danger"></span>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+
+    </div>
+
+    <div class="form-floating col-sm-12">
+        <hr />
+    </div>
+
+    @{ int i = 0; }
+
+    @foreach (var item in ViewBag.atributos)
+    {
+
+        int valorDeNivel = 0;
+        if (ViewBag.AtributosIngresados != null)
         {
-
-            int valorDeNivel = 0;
-            if (ViewBag.AtributosIngresados != null)
-            {
-                valorDeNivel = ViewBag.AtributosIngresados[i].nivel;
-            }
-
-            <div class="col-sm-3 form-group" style="margin-left:3%">
-                <label asp-for="nivel">@item.nombre:</label>
-                <input type="hidden" asp-for="atributoId" name="[@i].atributoId" value=@item.id class="col-sm"/>
-                <input type="number" range="" asp-for="nivel" name="[@i].nivel" min="0" max="10" class="form-control" placeholder=1 value="@valorDeNivel" />
-                <span asp-validation-for="nivel"></span>
-                <span hidden>
-                    @(i++)
-                </span>
-
-                <br />
-            </div>
+            valorDeNivel = ViewBag.AtributosIngresados[i].nivel;
         }
-        <div class="form-group" style="display:flex; flex-direction:row">
-            <input type="submit" value="Crear Atributos" class="btn btn-dark" />
 
-            <h4> XP Gastada => @ViewBag.CosteXP</h4>
+        <div class="col-sm-3 form-group margenLeft3" >
+            <input type="hidden" asp-for="atributoId" name="[@i].atributoId" value=@item.id/>
+
+            <label asp-for="nivel">@item.nombre:</label>
+            <input type="number" asp-for="nivel" name="[@i].nivel" id="inputForEach[@i]" class="inputForEach form-control" min="0" max="10" class="form-control" placeholder=1 value="@valorDeNivel" />
+            <span asp-validation-for="nivel"></span>
+
+            @{ i++; }
+
+            <br />
         </div>
-    </form>
-</div>
+    } 
+
+    <div class="form-group" >
+        <input type="submit" id="inputSubmit" class="btn btn-dark" value="Crear Atributos" />
+        <br />
+        <h4> XP Gastada => <b id="costoRealTime">0</b></h4>
+    </div>
+
+    
+
+</form>
+
+
 
 <div>
-    <a asp-controller="Personajes" asp-action="Index" class="btn btn-outline-danger mt-2 btn-sm">Regresar</a>
-    <div class="form-floating col-sm-3">
+        <a asp-controller="Personajes" asp-action="Index" class="btn btn-outline-danger mt-2 btn-sm">Regresar</a>
 </div>
+
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+
+
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+        }
     }

@@ -164,7 +164,6 @@ namespace PainKillerWeb.Controllers
             Raza razaPersonaje = await _context.raza.FirstOrDefaultAsync(x => x.id == personaje.razaId);
             CalculosXP cal = new CalculosXP();
             int xpGastada = cal.costeCreacionPJ(razaPersonaje, atributosDePersonaje);
-
             //---------------->
 
             if (ModelState.IsValid && xpGastada <= personaje.expActual)
@@ -182,8 +181,8 @@ namespace PainKillerWeb.Controllers
 
             ViewData["razaId"] = new SelectList(_context.raza, "id", "nombre", personaje.razaId);
             ViewBag.Atributos = _context.atributos.ToList();
-            ViewBag.CosteXP = xpGastada;
             ViewBag.AtributosIngresados = atributosDePersonaje;
+
             return View();
 
         }

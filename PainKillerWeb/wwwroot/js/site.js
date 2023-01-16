@@ -3,19 +3,6 @@
 
 // Write your JavaScript code.
 
-
-function validarFormulario() {
-
-	let nombre = document.getElementById("nombre").value
-
-	let resultado = false
-
-	alert("tu nombre es nashe, " + nombre)
-
-	return resultado
-
-}
-
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 
 const alert = (message, type) => {
